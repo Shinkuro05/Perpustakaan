@@ -1,0 +1,73 @@
+@extends('layouts.app')
+
+@section('title', 'Data Buku - Perpustakaan')
+@section('page-title', 'Data Buku')
+@section('page-subtitle', 'Kelola koleksi buku perpustakaan')
+
+@section('content')
+
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div class="flex gap-3">
+        <div class="relative flex-1 sm:w-72">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="searchInput" placeholder="Cari buku, penulis, kode..." value="{{ request('search') }}"
+                class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+        <select id="kategoriFilter" class="bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">Semua Kategori</option>
+            @foreach($kategoris as $kat)
+            <option value="{{ $kat }}" {{ request('kategori') === $kat ? 'selected' : '' }}>{{ $kat }}</option>
+            @endforeach
+        </select>
+    </div>
+    <a href="{{ route('books.create') }}" class="btn-primary whitespace-nowrap">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Tambah Buku
+    </a>
+</div>
+
+<!-- Table -->
+<div class="card overflow-hidden">
+    <div id="booksTable">
+        @include('books.partials.table', ['books' => $books])
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="mt-5" id="paginationDiv">
+    {{ $books->links() }}
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+let searchTimeout;
+const searchInput = document.getElementById('searchInput');
+const kategoriFilter = document.getElementById('kategoriFilter');
+
+function fetchBooks() {
+    const params = new URLSearchParams({
+        search: searchInput.value,
+        kategori: kategoriFilter.value,
+    });
+
+    fetch(`{{ route('books.index') }}?${params}`, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(r => r.json())
+    .then(data => {
+        document.getElementById('booksTable').innerHTML = data.html;
+        document.getElementById('paginationDiv').innerHTML = data.pagination;
+    });
+}
+
+searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(fetchBooks, 400);
+});
+
+kategoriFilter.addEventListener('change', fetchBooks);
+</script>
+@endpush
