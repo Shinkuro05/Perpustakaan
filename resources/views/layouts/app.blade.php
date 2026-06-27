@@ -21,16 +21,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .sidebar-link { @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 hover:text-white transition-all duration-200 text-sm font-medium; }
-        .sidebar-link.active { @apply bg-blue-600 text-white shadow-lg; }
-        .sidebar-link svg { @apply w-5 h-5 flex-shrink-0; }
-        .card { @apply bg-white rounded-2xl shadow-sm border border-slate-100; }
-        .btn-primary { @apply bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors inline-flex items-center gap-2; }
-        .btn-danger { @apply bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-600 transition-colors inline-flex items-center gap-1; }
-        .btn-secondary { @apply bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-200 transition-colors inline-flex items-center gap-2; }
-        .badge { @apply px-2.5 py-0.5 rounded-full text-xs font-semibold; }
-    </style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .sidebar-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.625rem 1rem; border-radius: 0.5rem; color: #94a3b8; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; text-decoration: none; }
+    .sidebar-link:hover { background: rgba(255,255,255,0.1); color: white; }
+    .sidebar-link.active { background: #2563eb; color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
+    .sidebar-link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+    .card { background: white; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+    .btn-primary { background: #2563eb; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-danger { background: #ef4444; color: white; padding: 0.375rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; border: none; cursor: pointer; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-secondary { background: #f1f5f9; color: #334155; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .badge { padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+</style>
     @stack('styles')
 </head>
 <body class="bg-slate-50 min-h-screen">
@@ -49,7 +53,7 @@
                 </svg>
             </div>
             <div>
-                <p class="text-white font-bold text-sm">Perpustakaan</p>
+                <p class="text-white font-bold text-sm">LibraNet</p>
                 <p class="text-slate-400 text-xs">Digital Library</p>
             </div>
         </div>
